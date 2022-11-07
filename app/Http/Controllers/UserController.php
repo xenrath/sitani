@@ -9,12 +9,11 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-   
+
     public function index()
     {
-        $data = User::paginate(3);
-        return view('dashboard', compact('data'));
-
+        $users = User::paginate(3);
+        return view('user.index', compact('users'));
     }
 
     /**
@@ -24,7 +23,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.create');
     }
 
     /**
@@ -35,7 +34,31 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required',
+            'telp' => 'required',
+            'alamat' => 'required',
+            'role' => 'required',
+            'gambar' => 'required|nullable|image|mimes:jpeg,jpg,png|max:2048',
+
+
+        ]);
+
+        $fileName = '';
+        if ($request->file('gambar')->isValid()) {
+            $gambar = $request->file('gambar');
+            $extention = $gambar->getClientOriginalExtension();
+            $fileName = "user/" . date('ymdHis') . "." . $extention;
+            $upload_path = 'public/storage/uploads/user';
+            $request->file('gambar')->move($upload_path, $fileName);
+            $input['gambar'] = $fileName;
+        }
+        User::create(array_merge($request->all(), [
+            'gambar' => $fileName,
+            'password' => bcrypt('12345'),
+        ]));
+
+        return redirect('user')->with('status', 'Berhasil menambahkan user');
     }
 
     /**
@@ -44,9 +67,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('user.show', compact('user'));
     }
 
     /**
@@ -58,7 +81,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::where('id', $id)->first();
-        return view('user.profil', compact('user'));
+        return view('user.edit', compact('user'));
     }
 
     /**
@@ -72,9 +95,11 @@ class UserController extends Controller
     {
         $request->validate([
             'nama' => 'required',
-            'tlp' => 'required',
+            'telp' => 'required',
+            'role' => 'required',
             'alamat' => 'required',
             'gambar' => 'sometimes|nullable|image|mimes:jpeg,jpg,png|max:2048',
+
         ]);
 
         if ($request->gambar) {
@@ -88,8 +113,9 @@ class UserController extends Controller
         User::where('id', $user->id)
             ->update([
                 'nama' => $request->nama,
-                'tlp' => $request->tlp,
+                'telp' => $request->telp,
                 'alamat' => $request->alamat,
+                'role' => $request->role,
                 'gambar' => $namaGambar,
             ]);
         return redirect('user')->with('status', 'Berhasil mengubah User');
@@ -103,7 +129,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = User::find($id);
+        $data->delete();
+        return redirect('user')->with('status', 'User berhasil dihapus');
     }
 
     public function profile($id)

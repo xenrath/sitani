@@ -67,7 +67,7 @@ class ProdukController extends Controller
         }
         Produk::create(array_merge($request->all(), [
             'gambar' => $fileName,
-            'user_id' => ''
+            'user_id' => '2'
         ]));
 
         return redirect('produk')->with('status', 'Berhasil menambahkan produk');

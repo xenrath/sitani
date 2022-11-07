@@ -45,9 +45,9 @@
           {{ $produk->deskripsi }}
         </p>
         @if (auth()->user()->isPetani())
-        <a href="{{ url('produk/1/edit') }}" class="btn btn-outline-secondary">Ubah Detail</a>
+        <a href="{{ route('produk.edit', $produk->id)}}" class="btn btn-outline-secondary">Ubah Detail</a>
         @else
-        <a href="{{ url('produk/1') }}" class="btn btn-outline-primary">Lihat Detail</a>
+        <a href="{{ route('produk.show', $produk->id)}}" class="btn btn-outline-primary">Lihat Detail</a>
         @endif
       </div>
     </div>
