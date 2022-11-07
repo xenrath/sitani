@@ -95,6 +95,12 @@
         <div data-i18n="kategori-harga-pangan">Kategori Harga Pangan</div>
       </a>
     </li>
+     <li class="menu-item {{ request()->is('user*') ? 'active' : '' }}">
+      <a href="{{ url('user') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-category"></i>
+        <div data-i18n="data-user">Data User</div>
+      </a>
+    </li>
   </ul>
 </aside>
 <!-- / Menu -->

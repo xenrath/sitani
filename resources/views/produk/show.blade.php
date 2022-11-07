@@ -12,21 +12,23 @@
 <div class="card mb-3 p-3">
   <div class="row g-0">
     <div class="col-md-4">
-      <img class="card-img card-img-left rounded" src="{{ asset('sneat/assets/img/elements/12.jpg') }}"
+      <img class="card-img card-img-left rounded" src={{ asset('storage/uploads/'.$produk->gambar) }}
         alt="Card image" />
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">Nama Produk</h5>
+        <h5 class="card-title">{{ $produk->nama }}</h5>
         <p class="card-text">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam earum consequuntur laudantium soluta voluptas
-          fugit dolor iure consectetur sint tempore.
+         Harga : Rp.{{ $produk->harga }}
+        </p>
+        <p class="card-text">
+         {{ $produk->deskripsi }}
         </p>
         <p class="card-text">
           <small class="text-muted">Last updated 3 mins ago</small>
         </p>
         <p class="fw-bold">
-          Stok : 10
+          Stok : {{ $produk->stok }}
         </p>
         <a href="" class="btn rounded-pill mt-4" style="background-color: #25D366; color: white;">
           <i class="bx bxl-whatsapp"></i>

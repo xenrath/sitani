@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HargaPangan;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,11 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $hargapangans = HargaPangan::paginate(10);
         if (auth()->check() && auth()->user()->isAdmin())
         {
             return redirect('dashboard');
         }
-        return view('home');
+        return view('home', compact('hargapangans'));
     }
 
     public function dashboard()
