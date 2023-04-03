@@ -65,6 +65,20 @@
           </div>
         </div>
         <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label class="form-label" for="latitude">Latitude *</label>
+            <input type="text" class="form-control" name="latitude" id="latitude" value="{{ old('latitude') }}"
+              placeholder="masukan latitude" />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label class="form-label" for="longitude">Longitude *</label>
+            <input type="text" class="form-control" name="longitude" id="longitude" value="{{ old('longitude') }}"
+              placeholder="masukan longitude" />
+          </div>
+        </div>
+        <div class="col-md-6">
           <div class="form-group">
             <label class="form-label" for="deskripsi">Isi *</label>
             <textarea class="form-control" name="deskripsi" id="deskripsi" rows="3"
@@ -96,7 +110,7 @@
   var kategori_id = document.getElementById('kategori_id');
   var layout_stok = document.getElementById('layout_stok');
   var stok = document.getElementById('stok');
-  kategori_id.addEventListener('change', function (){
+  kategori_id.addEventListener('change', function() {
     if (this.value == '2') {
       stok.value = 1;
       layout_stok.style.display = 'none';

@@ -18,31 +18,7 @@ class ProdukController extends Controller
         $kategori_id = $request->kategori_id;
         $kategoriproduk = KategoriProduk::where('id', $kategori_id)->first();
 
-        $keyword = $request->keyword;
-
-        if (auth()->user()->isTengkulak()) {
-            if ($keyword != "" && $kategori_id != "") {
-                $produks = Produk::where([
-                    ['status', true],
-                    ['kategori_id', $kategori_id],
-                    ['nama', 'like', "%$keyword%"],
-                ])->with('gambar')->get();
-            } elseif ($keyword != "" && $kategori_id == "") {
-                $produks = Produk::where([
-                    ['status', true],
-                    ['nama', 'like', "%$keyword%"]
-                ])->with('gambar')->get();
-            } elseif ($keyword == "" && $kategori_id != "") {
-                $produks = Produk::where([
-                    ['status', true],
-                    ['kategori_id', $kategori_id]
-                ])->with('gambar')->get();
-            } else {
-                $produks = Produk::where('status', true)->with('gambar')->get();
-            }
-        } else {
-            $produks = Produk::with('gambar')->get();
-        }
+        $produks = Produk::where('user_id', auth()->user()->id)->with('gambar')->get();
 
         // return response($produks);
         $kategoriproduks = KategoriProduk::get();
@@ -63,6 +39,8 @@ class ProdukController extends Controller
             'kategori_id' => 'required',
             'harga' => 'required|gt:0',
             'stok' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
             'deskripsi' => 'required',
             'gambar' => 'required',
         ], [
@@ -71,6 +49,8 @@ class ProdukController extends Controller
             'harga.required' => 'Harga tidak boleh kosong!',
             'harga.gt' => 'Harga yang dimasukan salah!',
             'stok.required' => 'Stok tidak boleh kosong!',
+            'latitude.required' => 'Latitude tidak boleh kosong!',
+            'longitude.required' => 'Longitude tidak boleh kosong!',
             'deskripsi.required' => 'Deskripsi tidak boleh kosong!',
             'gambar.required' => 'Gambar harus ditambahkan!',
         ]);
@@ -140,6 +120,8 @@ class ProdukController extends Controller
             'kategori_id' => 'required',
             'harga' => 'required|gt:0',
             'stok' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
             'deskripsi' => 'required',
         ], [
             'nama.required' => 'Nama produk tidak boleh kosong!',
@@ -147,6 +129,8 @@ class ProdukController extends Controller
             'harga.required' => 'Harga tidak boleh kosong!',
             'harga.gt' => 'Harga yang dimasukan salah!',
             'stok.required' => 'Stok tidak boleh kosong!',
+            'latitude.required' => 'Stok tidak boleh kosong!',
+            'longitude.required' => 'Stok tidak boleh kosong!',
             'deskripsi.required' => 'Deskripsi tidak boleh kosong!',
             'gambar.required' => 'Gambar harus ditambahkan!',
         ]);
@@ -162,6 +146,8 @@ class ProdukController extends Controller
                 'kategori_id' => $request->kategori_id,
                 'harga' => $request->harga,
                 'stok' => $request->stok,
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
                 'deskripsi' => $request->deskripsi
             ]);
 

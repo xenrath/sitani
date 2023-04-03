@@ -77,6 +77,22 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group mb-3">
+            <label class="form-label" for="latitude">Latitude *</label>
+            <input type="text" class="form-control" name="latitude" id="latitude"
+              value="{{ old('latitude', $produk->latitude) }}" placeholder="Masukan latitude" />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label class="form-label" for="longitude">Longitude *</label>
+            <input type="text" class="form-control" name="longitude" id="longitude"
+              value="{{ old('longitude', $produk->longitude) }}" placeholder="Masukan longitude" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group mb-3">
             <label class="form-label" for="gambar">Gambar</label>
             <input type="file" class="form-control" name="gambars[]" value="{{ old('gambar', $produk->gambar) }}id="
               gambar" accept="image/*" multiple />

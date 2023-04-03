@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-   public function register(Request $request)
+    public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'nama' => 'required',
@@ -26,6 +26,12 @@ class UserController extends Controller
             'password.required' => 'Password harus diisi!',
             'password.confirmed' => 'Konfirmasi password tidak sesuai!'
         ]);
+
+        $nol = substr($request->telp, 0, 1);
+
+        if ($nol == '0') {
+            return back()->with('error', array('Format telepon salah !'));
+        }
 
         if ($validator->fails()) {
             $error = $validator->errors()->all();

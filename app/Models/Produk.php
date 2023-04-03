@@ -15,6 +15,8 @@ class Produk extends Model
         'harga',
         'kategori_id',
         'stok',
+        'latitude',
+        'longitude',
         'deskripsi'
     ];
 
@@ -22,7 +24,7 @@ class Produk extends Model
     {
         return $this->belongsTo(KategoriProduk::class);
     }
-    
+
     public function user()
     {
         return $this->belongsTo(User::class, "user_id", "id");
